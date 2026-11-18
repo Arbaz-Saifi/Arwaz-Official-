@@ -95,7 +95,7 @@
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 async function sendMessage(){
-  let input = document.getElementById('chatInput');
+  let input = document.getElementById('chatinput');
   let log = document.getElementById('chatlog');
   let msg = input.value.trim();
   if(!msg) return;
@@ -111,7 +111,7 @@ async function sendMessage(){
   input.value = "";
   log.scrollTop = log.scrollHeight;
 }
-document.getElementById('chatInput').addEventListener('keydown', e=>{
+document.getElementById('chatinput').addEventListener('keydown', e=>{
   if(e.key === 'Enter') sendMessage();
 });
 </script>
