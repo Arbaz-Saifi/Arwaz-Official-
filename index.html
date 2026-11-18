@@ -92,40 +92,26 @@
   </section>
 
   <footer>© <span id="year"></span> Arwaz Official · Made with care</footer>
-  <script>
-const API_KEY = "AQ.Ab8RN6IHe8pb9QNGwZzkrcA2_pZRoxHKR_D0XhBoUnnaTG00Xw";
-
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 async function sendMessage(){
   let input = document.getElementById('chatInput');
-  let msg = input.value;
+  let log = document.getElementById('chatlog');
+  let msg = input.value.trim();
   if(!msg) return;
+  log.innerHTML += "<div>You: "+msg+"</div>";
   input.value = "Soch raha hu...";
-
-  let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+  let res = await fetch("https://purple-poetry-5ba43.arbazsaifi-016.workers.dev", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({contents:[{parts:[{text: msg}]}]})
+    body: JSON.stringify({message: msg})
   });
-
   let data = await res.json();
-  let reply = data.candidates[0].content.parts[0].text;
-  
-  let chatBox = document.getElementById('chatlog');
-  chatBox.innerHTML += "<p><b>Tu:</b> "+msg+"</p><p><b>AI:</b> "+reply+"</p>";
+  log.innerHTML += "<div>Assistant: "+data.reply+"</div>";
   input.value = "";
+  log.scrollTop = log.scrollHeight;
 }
-  </script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-      const input=document.getElementById('chatinput'), log=document.getElementById('chatlog');
-      const msg=input.value.trim(); if(!msg)return;
-      const user=document.createElement('div'); user.textContent='You: '+msg; log.appendChild(user);
-      const reply=document.createElement('div');
-      const q=msg.toLowerCase();
-      reply.textContent='Assistant: '+(q.includes('project')?'You can find the current projects in the My Projects section.':q.includes('about')?'This is the personal website of Arwaz Official.':q.includes('contact')||q.includes('instagram')?'Use the Instagram button in the Contact section.':'Thanks for visiting Arwaz Official! This demo assistant is not connected to live AI yet.');
-      log.appendChild(reply); input.value=''; log.scrollTop=log.scrollHeight;
-    }
-    document.getElementById('chatinput').addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage()});
-  </script>
-</body>
-</html>
+document.getElementById('chatInput').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') sendMessage();
+});
+</script>
