@@ -93,6 +93,29 @@
 
   <footer>© <span id="year"></span> Arwaz Official · Made with care</footer>
   <script>
+const API_KEY = "TERI_GEMINI_KEY_YAHAN";
+
+async function sendMsg(){
+  let input = document.getElementById('chatInput');
+  let msg = input.value;
+  if(!msg) return;
+  input.value = "Soch raha hu...";
+
+  let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({contents:[{parts:[{text: msg}]}]})
+  });
+
+  let data = await res.json();
+  let reply = data.candidates[0].content.parts[0].text;
+  
+  let chatBox = document.getElementById('chatlog');
+  chatBox.innerHTML += "<p><b>Tu:</b> "+msg+"</p><p><b>AI:</b> "+reply+"</p>";
+  input.value = "";
+}
+  </script>
+  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     function sendMessage(){
       const input=document.getElementById('chatinput'), log=document.getElementById('chatlog');
