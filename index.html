@@ -95,7 +95,7 @@
   <script>
 const API_KEY = "AQ.Ab8RN6IHe8pb9QNGwZzkrcA2_pZRoxHKR_D0XhBoUnnaTG00Xw";
 
-async function sendMsg(){
+async function sendMessage(){
   let input = document.getElementById('chatInput');
   let msg = input.value;
   if(!msg) return;
@@ -117,7 +117,6 @@ async function sendMsg(){
   </script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    function sendMessage(){
       const input=document.getElementById('chatinput'), log=document.getElementById('chatlog');
       const msg=input.value.trim(); if(!msg)return;
       const user=document.createElement('div'); user.textContent='You: '+msg; log.appendChild(user);
